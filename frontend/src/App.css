@@ -1,0 +1,98 @@
+*{
+  box-sizing: border-box;
+}
+body{
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #0f172a;
+  color: white;
+}
+.logo{
+  font-size: 48px;
+  margin: 20px;
+  color: white;
+}
+.mic-button{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  margin-top: 30px;
+  background: #334155;
+  color: white;
+  transition: transform 0.2s;
+
+}
+.mic-button:hover {
+  transform: scale(1.05);
+}
+.app{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+}
+.assistant {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.status {
+  margin-top: 15px;
+  font-size: 18px;
+  color: #94a3b8
+}
+.chat{
+  width: 500px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+.alpha-message{
+  padding: 15px;
+  border-radius: 10px;
+  background: #1e293b;
+  font-size: 16px;
+  line-height: 1.5;
+  margin:0;
+}
+.input-area {
+  display: flex;
+  width: 500px;
+  margin-top: 20px;
+}
+.input-area input {
+  flex: 1;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  color: white;
+  background: #1e293b;
+  outline: none;
+}
+.input-area button {
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 8px;
+  border: none;
+  border-radius: 8px;
+  background: #334155;
+  color:white;
+}
+
+.input-area button:hover {
+  background: #475569;
+}
+.input-area input::placeholder {
+  color: #94a3b8;
+}
+@media (max-width: 600px) {
+  .chat,
+  .input-area {
+    width: 100%;
+  }
+}
