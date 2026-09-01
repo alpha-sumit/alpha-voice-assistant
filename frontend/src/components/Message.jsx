@@ -1,7 +1,9 @@
-function Message({ message }) {
-  const isAlpha = message.sender === 'Alpha'
+function Message({ sender, text }) {
+
+  const isAlpha = sender === 'Alpha'
 
   return (
+
     <div
       className={`message ${
         isAlpha
@@ -11,30 +13,31 @@ function Message({ message }) {
     >
 
       <div className="message-avatar">
+
         {isAlpha ? 'A' : 'U'}
+
       </div>
+
 
       <div className="message-content">
 
-        <div className="message-header">
+        <span className="message-name">
 
-          <span className="message-name">
-            {message.sender}
-          </span>
+          {sender}
 
-          <span className="message-time">
-            Now
-          </span>
+        </span>
 
-        </div>
 
         <p>
-          {message.text}
+
+          {text}
+
         </p>
 
       </div>
 
     </div>
+
   )
 }
 

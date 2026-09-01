@@ -1,15 +1,17 @@
-import Message from './Message'
+import ConversationList from './ConversationList'
 
-function Conversation({ messages }) {
+function Conversation({ messages = [] }) {
+
   return (
+
     <div className="conversation">
-      {messages.map((message, index) => (
-        <Message
-          key={index}
-          message={message}
-        />
-      ))}
+
+      <ConversationList
+        messages={messages}
+      />
+
     </div>
+
   )
 }
 

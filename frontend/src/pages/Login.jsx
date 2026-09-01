@@ -103,7 +103,7 @@ function Login({ onRegister, onLogin}) {
           {/* SIGN IN */}
 
           <button
-            type="submit"
+            type="button"
             className="auth-button"
             onClick={onLogin}
           >

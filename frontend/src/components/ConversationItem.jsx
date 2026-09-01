@@ -1,23 +1,14 @@
-function ConversationItem({ conversation, onSelect }) {
+import Message from './Message'
+
+function ConversationItem({ message }) {
+
   return (
-    <button
-      className="conversation-item"
-      onClick={() => onSelect(conversation)}
-    >
-      <span className="conversation-icon">
-        💬
-      </span>
 
-      <span className="conversation-info">
-        <span className="conversation-title">
-          {conversation.title}
-        </span>
+    <Message
+      sender={message.sender}
+      text={message.text}
+    />
 
-        <span className="conversation-date">
-          {conversation.date}
-        </span>
-      </span>
-    </button>
   )
 }
 

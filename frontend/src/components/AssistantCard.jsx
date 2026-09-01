@@ -1,36 +1,105 @@
+import { useState } from 'react'
+
 import Microphone from './Microphone'
 import Conversation from './Conversation'
-import ChatInput from './ChatInput'
+import ChatInput from './Chatinput'
 
-function AssistantCard({
-  assistantState,
-  onMicToggle,
-  messages,
-  input,
-  onInputChange,
-  onSend,
-  onKeyDown
-}) {
+function AssistantCard() {
+
+  // =========================
+  // CHAT INPUT
+  // =========================
+
+  const [input, setInput] = useState('')
+
+
+  // =========================
+  // CONVERSATION
+  // =========================
+
+  const [messages, setMessages] = useState([
+    {
+      sender: 'Alpha',
+      text: "Hello! I'm Alpha. How can I help you today?"
+    }
+  ])
+
+
+  // =========================
+  // SEND MESSAGE
+  // =========================
+
+  const sendMessage = () => {
+
+    if (!input.trim()) {
+      return
+    }
+
+
+    const newMessage = {
+      sender: 'You',
+      text: input
+    }
+
+
+    setMessages((previousMessages) => [
+      ...previousMessages,
+      newMessage
+    ])
+
+
+    setInput('')
+  }
+
+
+  // =========================
+  // ENTER KEY
+  // =========================
+
+  const handleKeyDown = (event) => {
+
+    if (event.key === 'Enter') {
+      sendMessage()
+    }
+
+  }
+
+
   return (
+
     <section className="assistant-card">
 
-      <Microphone
-        assistantState={assistantState}
-        onToggle={onMicToggle}
-      />
+
+      {/* =========================
+          MICROPHONE
+      ========================= */}
+
+      <Microphone />
+
+
+      {/* =========================
+          CONVERSATION
+      ========================= */}
 
       <Conversation
         messages={messages}
       />
 
+
+      {/* =========================
+          CHAT INPUT
+      ========================= */}
+
       <ChatInput
         input={input}
-        onInputChange={onInputChange}
-        onSend={onSend}
-        onKeyDown={onKeyDown}
+        setInput={setInput}
+        sendMessage={sendMessage}
+        handleKeyDown={handleKeyDown}
       />
 
+
     </section>
+
   )
 }
 
