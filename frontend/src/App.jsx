@@ -1,130 +1,63 @@
 import { useState } from 'react'
-
-import Navbar from './components/Navbar'
-import SettingsPanel from './components/SettingsPanel'
-import Hero from './components/Hero'
-import AssistantCard from './components/AssistantCard'
-import Footer from './components/Footer'
-
 import './App.css'
+
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Home from './pages/Home'
 
 function App() {
 
-  const [input, setInput] = useState('')
-
-  const [messages, setMessages] = useState([
-    {
-      sender: 'Alpha',
-      text: "Hello! I'm Alpha. How can I help you today?"
-    }
-  ])
-
-  const [assistantState, setAssistantState] = useState('idle')
-
-  const [showSettings, setShowSettings] = useState(false)
+  // Controls which page is currently displayed
+  const [page, setPage] = useState('login')
 
 
-  const sendMessage = () => {
+  // =========================
+  // LOGIN PAGE
+  // =========================
 
-    if (!input.trim()) return
+  if (page === 'login') {
 
-    const userMessage = {
-      sender: 'You',
-      text: input
-    }
-
-    const alphaMessage = {
-      sender: 'Alpha',
-      text: `I received your message: "${input}"`
-    }
-
-    setMessages([
-      ...messages,
-      userMessage,
-      alphaMessage
-    ])
-
-    setInput('')
-  }
-
-
-  const handleKeyDown = (event) => {
-
-    if (event.key === 'Enter') {
-      sendMessage()
-    }
-
-  }
-
-
-  const clearConversation = () => {
-
-    setMessages([
-      {
-        sender: 'Alpha',
-        text: "Hello! I'm Alpha. How can I help you today?"
-      }
-    ])
-
-  }
-
-
-  const toggleListening = () => {
-
-    if (assistantState === 'idle') {
-
-      setAssistantState('listening')
-
-    } else {
-
-      setAssistantState('idle')
-
-    }
-
-  }
-
-
-  return (
-    <div className="app">
-
-      <Navbar
-        onClear={clearConversation}
-        onSettings={() =>
-          setShowSettings(!showSettings)
-        }
+    return (
+      <Login
+        onRegister={() => setPage('register')}
+        onLogin={() => setPage('home')}
       />
+    )
+
+  }
 
 
-      {showSettings && (
-        <SettingsPanel
-          onClose={() =>
-            setShowSettings(false)
-          }
-        />
-      )}
+  // =========================
+  // REGISTER PAGE
+  // =========================
+
+  if (page === 'register') {
+
+    return (
+      <Register
+        onLogin={() => setPage('login')}
+        onRegister={() => setPage('home')}
+      />
+    )
+
+  }
 
 
-      <main className="main-content">
+  // =========================
+  // HOME PAGE
+  // =========================
 
-        <Hero />
+  if (page === 'home') {
 
-        <AssistantCard
-          assistantState={assistantState}
-          onMicToggle={toggleListening}
-          messages={messages}
-          input={input}
-          onInputChange={setInput}
-          onSend={sendMessage}
-          onKeyDown={handleKeyDown}
-        />
+    return (
+      <Home />
+    )
 
-      </main>
+  }
 
 
-      <Footer />
-
-    </div>
-  )
+  // Fallback
+  return null
 }
 
 export default App
