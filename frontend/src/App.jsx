@@ -1,108 +1,127 @@
+import { useState } from 'react'
+
+import Navbar from './components/Navbar'
+import SettingsPanel from './components/SettingsPanel'
+import Hero from './components/Hero'
+import AssistantCard from './components/AssistantCard'
+import Footer from './components/Footer'
+
 import './App.css'
 
 function App() {
+
+  const [input, setInput] = useState('')
+
+  const [messages, setMessages] = useState([
+    {
+      sender: 'Alpha',
+      text: "Hello! I'm Alpha. How can I help you today?"
+    }
+  ])
+
+  const [assistantState, setAssistantState] = useState('idle')
+
+  const [showSettings, setShowSettings] = useState(false)
+
+
+  const sendMessage = () => {
+
+    if (!input.trim()) return
+
+    const userMessage = {
+      sender: 'You',
+      text: input
+    }
+
+    const alphaMessage = {
+      sender: 'Alpha',
+      text: `I received your message: "${input}"`
+    }
+
+    setMessages([
+      ...messages,
+      userMessage,
+      alphaMessage
+    ])
+
+    setInput('')
+  }
+
+
+  const handleKeyDown = (event) => {
+
+    if (event.key === 'Enter') {
+      sendMessage()
+    }
+
+  }
+
+
+  const clearConversation = () => {
+
+    setMessages([
+      {
+        sender: 'Alpha',
+        text: "Hello! I'm Alpha. How can I help you today?"
+      }
+    ])
+
+  }
+
+
+  const toggleListening = () => {
+
+    if (assistantState === 'idle') {
+
+      setAssistantState('listening')
+
+    } else {
+
+      setAssistantState('idle')
+
+    }
+
+  }
+
+
   return (
     <div className="app">
 
-      <header className="navbar">
-        <div className="brand">
-          <div className="brand-icon">A</div>
+      <Navbar
+        onClear={clearConversation}
+        onSettings={() =>
+          setShowSettings(!showSettings)
+        }
+      />
 
-          <div>
-            <h1>Alpha</h1>
-            <span>AI Voice Assistant</span>
-          </div>
-        </div>
 
-        <div className="online-status">
-          <span className="status-dot"></span>
-          Online
-        </div>
-      </header>
+      {showSettings && (
+        <SettingsPanel
+          onClose={() =>
+            setShowSettings(false)
+          }
+        />
+      )}
 
 
       <main className="main-content">
 
-        <section className="hero">
-          <p className="eyebrow">YOUR PERSONAL ASSISTANT</p>
+        <Hero />
 
-          <h2>How can I help you?</h2>
-
-          <p className="hero-description">
-            Speak naturally with Alpha or type your command below.
-          </p>
-        </section>
-
-
-        <section className="assistant-card">
-
-          <div className="mic-section">
-
-            <button className="mic-button">
-              🎙️
-            </button>
-
-            <h3>Tap to speak</h3>
-
-            <p className="status">
-              Click the microphone to speak
-            </p>
-
-          </div>
-
-
-          <div className="conversation">
-
-            <div className="message alpha-message">
-              <div className="message-avatar">A</div>
-
-              <div className="message-content">
-                <span className="message-name">Alpha</span>
-
-                <p>
-                  Hello! I'm Alpha. How can I help you today?
-                </p>
-              </div>
-            </div>
-
-
-            <div className="message user-message">
-              <div className="message-avatar">U</div>
-
-              <div className="message-content">
-                <span className="message-name">You</span>
-
-                <p>
-                  I'm ready to get started.
-                </p>
-              </div>
-            </div>
-
-          </div>
-
-
-          <div className="input-area">
-
-            <input
-              type="text"
-              placeholder="Ask Alpha something..."
-            />
-
-            <button className="send-button">
-              Send
-            </button>
-
-          </div>
-
-        </section>
+        <AssistantCard
+          assistantState={assistantState}
+          onMicToggle={toggleListening}
+          messages={messages}
+          input={input}
+          onInputChange={setInput}
+          onSend={sendMessage}
+          onKeyDown={handleKeyDown}
+        />
 
       </main>
 
 
-      <footer className="footer">
-        <span>Alpha AI Assistant</span>
-        <span>Built for intelligent interaction</span>
-      </footer>
+      <Footer />
 
     </div>
   )
